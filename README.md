@@ -1,94 +1,145 @@
-# Gamely-android-sdk
+# Gamely Android Sdk
 
 ![Onmobile: Logo](http://t0.gstatic.com/images?q=tbn:ANd9GcQ7a6C5baa2f_3KA2zVpouH29tMGgRfcCn1PGuubySgbFbKuMxg)
 
-# Onmo Wrapper Games SDK
-
-Onmo Wrapper SDK is Bridge access to UGames Store Android applications.
-SDK provide required information through callback methods.
-just start your app and complete the set-up given below instructions.
+# Android SDK Start Guide
+Gamely provides a Android library to add Gamifications in your app. This section shows how to set up a Gamely Android library in your app.
 
 
-## Set-up
+## Integrate SDK with App
+The Gamely SDK library can be integrated in any Android project by following steps mentioned in the sections below. SDK handles the artifacts remotely and resolves the dependencies at build level in integrating environment. This is JitPack based private artifacts library.
 
 
 
-
-### Download
-Download [the latest AAR](https://github.com/srinivasvadde/Wrapper_Games_SDKsample/releases/latest) or grab via Gradle:
-
-
-
-Make sure to require Internet permissions in your AndroidManifest.xml file:
+### Add Authentication Token
+The authentication token identifies the validity of dependent packages in the integrating environment. 
+Add the following line in the gradle.properties file of your Android application to add token:
 
 ```groovy
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.INTERNET" />
-</manifest>
+authToken= Add your token here. (Authentication token will be shared offline)
 ```
+
+### Authenticate Maven Build Signatures
+Add it in your root build.gradle at the end of repositories: authToken added in the gradle.propeties
 
 ```groovy
-implementation 'com.github.onmo:wgSDK:1.01'
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url https://jitpack.io //this is required to define as a
+jitpack//
+            credentials { username authToken } ///authToken which is shared in the SDK document//
+        }
+     }
+  }
+```
+The Android build environment will now validate the authentication token and download the dependencies.
+
+### Import SDK
+You can import the SDK file by adding the following dependency in the build.gradle file at the application level.
+
+```groovy
+implementation 'path to lib'
 ```
 
+### Configurations to Support Third Party Libraries
+Gamely SDK module has dependencies with the following third-party libraries.
 
-### Putting it together
-Integrating with Onmo Wrapper SDK is simple, seamless and straightforward to Wrapper Game applications. There is a simple initialization step
-which occurs in your `Main Activity` or `Application class`:
-
-```java
-
-    public class MyApplication extends Application {
-      public void onCreate() {
-        super.onCreate();
-        //init the SDK
-        OnmoWGSDK.newInitializer(mContext);
-      }
-    }
+```groovy
+implementation 'androidx.core:core-ktx:1.7.0'
+implementation 'androidx.appcompat:appcompat:1.4.2'
+implementation 'com.google.android.material:material:1.6.1'
+implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
+implementation 'com.github.bumptech.glide:glide:4.11.0'
+annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 ```
+**Note:**
 
-### Accessing SDK methods
-To Access any of SDK method is allowed through  IWGameSession interface, example code given below :
+There is no need to add the above dependencies.
+In case the project also uses some or any of the above dependencies and libraries then exclude those by adding below lines along with **implementation 'org.bitbucket.onmobile-rbtsdk:latest_version'**
+{exclude group: ‘com.x.y’ , module: ‘module X’} 
 
-```java
-IWGameSession mWGSession = OnmoWGSDK.newInitializer(mContext)
-                              .build();
+Example: To exclude 'androidx.appcompat:appcompat:1.2.0'
+
+<sub>(implementation 'org.bitbucket.onmobile-rbtsdk:onmo_dialer:latest_version') 
+{exclude group: 'androidx.appcompat', module: ' appcompat'}</sub>
+
+
+This step is…  | If your app is…
+-------------- | -------------
+Required       | using a different version of AppCompat library.SDK will use the same version of library in the app.
+Not required	|  not using AppCompat library.
+Not required	| using same version of AppCompat library. Android OS will keep only one version of library for both app and SDK.
+
+
+### Initialize SDK
+You can do sdk intialisation in application/activity class
+```groovy
+try {
+           val gamelySDKClient = GamelySdkClient.Builder(this)
+                .setUserId("user id value") //Mandatory
+                .setApiKey("api key value")//Mandatory
+                .setLogEnabled(false) //false by default | Optional
+                .build()
+        } catch (gamelySdkInitialisationException: GamelySdkInitialisationException) {
+            //Catch the exception here
+            Toast.makeText(this, gamelySdkInitialisationException.message, Toast.LENGTH_SHORT)
+                .show()
+            //gamelySdkInitialisationException.printStackTrace()
+        }
 ```
+Possible Exceptions in case of any failure  | Type
+------------- | -------------
+Exception                   | GamelySdkInitialisationException
 
 
-#### Authenticating with accesses token
+### Get Template
+Use following lines to get template
 
-```java
-//Basic authentication
-IWGameSession mWGSession = OnmoWGSDK.newInitializer(mContext)
-                              .build(o6a-PfU-Phc-3tq);
-```
+```kotlin
+//Use only activity context here
+gamelySDKClient?.getTemplate(activityContext, TemplateType, object : IResponseListener {
+            override fun onSuccess() {}
 
-#### Example - Getting User ID
-
-```java
-
-        mWGSession.getRegisterUser(new IResponseHandler<String>() {
-            @Override
-            public void handleResponse(String aUserId) {
-                // wrapper game get the aUserId in callback result
+            override fun onFailure(message: String) {
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
             }
+        })
+```
 
-            @Override
-            public void handleException(SDKException exception) {
+TemplateType  ||
+------------- | -------------
+Template.SPIN_WHEEL
+Template.OPINION_POLL
 
-            }
-        });
 
+### Get Reward
+Use following lines to get reward
+
+```kotlin
+//Use only activity context here
+ gamelySDKClient?.getReward(this@MainActivity, object : IResponseListener {
+                override fun onSuccess() {}
+
+                override fun onFailure(message: String) {
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+                }
+
+            })
 ```
 
 
 
 
-See the [`Wrapper_Games_SDKsample` project](Wrapper_Games_SDKsample) for more details.
+See the [`Gamely-android-sdk` project](https://www.onmobile.com/) for more details.
 
 
 
 #### Copyright
 
-##### ©2018 OnMobile Global Limited All Rights Reserved.
+##### ©2022 OnMobile Global Limited All Rights Reserved.
