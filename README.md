@@ -16,7 +16,7 @@ The authentication token identifies the validity of dependent packages in the in
 Add the following line in the gradle.properties file of your Android application to add token:
 
 ```groovy
-authToken= Add your token here. (Authentication token will be shared offline)
+authToken= token_value //Authentication token will be shared offline
 ```
 
 ### Authenticate Maven Build Signatures
@@ -28,9 +28,8 @@ allprojects {
         google()
         jcenter()
         maven {
-            url https://jitpack.io //this is required to define as a
-jitpack//
-            credentials { username authToken } ///authToken which is shared in the SDK document//
+            url https://jitpack.io
+            credentials { username authToken }
         }
      }
   }
@@ -41,7 +40,7 @@ The Android build environment will now validate the authentication token and dow
 You can import the SDK file by adding the following dependency in the build.gradle file at the application level.
 
 ```groovy
-implementation 'path to lib'
+implementation 'path_to_lib'
 ```
 
 ### Configurations to Support Third Party Libraries
@@ -61,14 +60,16 @@ annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 **Note:**
 
 There is no need to add the above dependencies.
-In case the project also uses some or any of the above dependencies and libraries then exclude those by adding below lines along with **implementation 'org.bitbucket.onmobile-rbtsdk:latest_version'**
+In case the project also uses some or any of the above dependencies and libraries then exclude those by adding below lines along with 
+
+**implementation 'org.bitbucket.onmobile-rbtsdk:latest_version'**
+
 {exclude group: ‘com.x.y’ , module: ‘module X’} 
 
 Example: To exclude 'androidx.appcompat:appcompat:1.2.0'
 
-<sub>(implementation 'org.bitbucket.onmobile-rbtsdk:onmo_dialer:latest_version') 
-{exclude group: 'androidx.appcompat', module: ' appcompat'}</sub>
-
+*(implementation 'org.bitbucket.onmobile-rbtsdk:onmo_dialer:latest_version') 
+{exclude group: 'androidx.appcompat', module: ' appcompat'}*
 
 This step is…  | If your app is…
 -------------- | -------------
@@ -93,10 +94,6 @@ try {
             //gamelySdkInitialisationException.printStackTrace()
         }
 ```
-Possible Exceptions in case of any failure  | Type
-------------- | -------------
-Exception                   | GamelySdkInitialisationException
-
 
 ### Get Template
 Use following lines to get template
@@ -112,10 +109,10 @@ gamelySDKClient?.getTemplate(activityContext, TemplateType, object : IResponseLi
         })
 ```
 
-TemplateType  ||
+TemplateType  | Description
 ------------- | -------------
-Template.SPIN_WHEEL
-Template.OPINION_POLL
+Template.SPIN_WHEEL | Spin Wheel
+Template.OPINION_POLL | Opinion Poll
 
 
 ### Get Reward
