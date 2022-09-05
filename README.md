@@ -3,10 +3,10 @@
 ![Onmobile: Logo](http://t0.gstatic.com/images?q=tbn:ANd9GcQ7a6C5baa2f_3KA2zVpouH29tMGgRfcCn1PGuubySgbFbKuMxg)
 
 # Android SDK Start Guide
-Gamely provides a Android library to add Gamifications in your app. This section shows how to set up a Gamely Android library in your app.
+Gamely provides android library to add gamifications in your app. This section shows how to set up Gamely android library in your app.
 
 
-## Integrate SDK with App
+## Sdk Integration
 The Gamely SDK library can be integrated in any Android project by following steps mentioned in the sections below. SDK handles the artifacts remotely and resolves the dependencies at build level in integrating environment. This is JitPack based private artifacts library.
 
 
@@ -58,17 +58,15 @@ implementation 'com.github.bumptech.glide:glide:4.11.0'
 annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 ```
 **Note:**
-
 There is no need to add the above dependencies.
 In case the project also uses some or any of the above dependencies and libraries then exclude those by adding below lines along with 
 
 **implementation 'org.bitbucket.onmobile-rbtsdk:latest_version'**
+**{exclude group: ‘com.x.y’ , module: ‘module X’}**
 
-{exclude group: ‘com.x.y’ , module: ‘module X’} 
+Example: To exclude 'androidx.appcompat:appcompat:1.4.2'
 
-Example: To exclude 'androidx.appcompat:appcompat:1.2.0'
-
-*(implementation 'org.bitbucket.onmobile-rbtsdk:onmo_dialer:latest_version') 
+*implementation 'org.bitbucket.onmobile-rbtsdk:onmo_dialer:latest_version' 
 {exclude group: 'androidx.appcompat', module: ' appcompat'}*
 
 This step is…  | If your app is…
@@ -82,7 +80,7 @@ Not required	| using same version of AppCompat library. Android OS will keep onl
 You can do sdk intialisation in application/activity class
 ```groovy
 try {
-           val gamelySDKClient = GamelySdkClient.Builder(this)
+           val gamelySDKClient = GamelySdkClient.Builder(context)
                 .setUserId("user id value") //Mandatory
                 .setApiKey("api key value")//Mandatory
                 .setLogEnabled(false) //false by default | Optional
