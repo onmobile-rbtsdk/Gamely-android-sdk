@@ -16,7 +16,7 @@ The authentication token identifies the validity of dependent packages in the in
 Add the following line in the gradle.properties file of your Android application to add token:
 
 ```groovy
-authToken= token_value //Authentication token will be shared offline
+authToken= token_value //Authentication token onmobile team will be shared offline
 ```
 
 ### Authenticate Maven Build Signatures
@@ -40,7 +40,7 @@ The Android build environment will now validate the authentication token and dow
 You can import the SDK file by adding the following dependency in the build.gradle file at the application level.
 
 ```groovy
-implementation 'path_to_lib'
+implementation '<Onmobile team share you the path of the SDK>' 
 ```
 
 ### Configurations to Support Third Party Libraries
@@ -81,8 +81,8 @@ You can do sdk intialisation in application/activity class
 ```groovy
 try {
            val gamelySDKClient = GamelySdkClient.Builder(context)
-                .setUserId("user id value") //Mandatory
-                .setApiKey("api key value")//Mandatory
+                .setUserId("user id value") //Mandatory <Onmobile team will share these details>
+                .setApiKey("api key value")//Mandatory <Onmobile team will share these details>
                 .setLogEnabled(false) //false by default | Optional
                 .build()
         } catch (gamelySdkInitialisationException: GamelySdkInitialisationException) {
@@ -111,6 +111,10 @@ TemplateType  | Description
 ------------- | -------------
 Template.SPIN_WHEEL | Spin Wheel
 Template.OPINION_POLL | Opinion Poll
+Template.SCRATCH_CARD | Scratch Card
+Template.SLOT_MACHINE | Slot Machine
+Template.GET_REWARD | Get Reward
+
 
 
 ### Get Reward
@@ -131,7 +135,7 @@ Use following lines to get reward
 
 
 
-See the [`Gamely-android-sdk` project](https://www.onmobile.com/) for more details.
+See the [`Gamely-android-sdk` project](https://github.com/OnmobileGamely/Gamely-android-sdk/) for more details.
 
 
 
