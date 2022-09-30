@@ -2,10 +2,8 @@
 
 ![Onmobile: Logo](http://t0.gstatic.com/images?q=tbn:ANd9GcQ7a6C5baa2f_3KA2zVpouH29tMGgRfcCn1PGuubySgbFbKuMxg)
 
-  
 
-
-## SDK quick Guide
+## SDK Quick Guide
 Learn how to quickly integrate and start using the Gamely Android SDK
 
 ### SDK Specs and Prerequisites
@@ -19,21 +17,23 @@ b) Permissions Required
     The following permissions are required by the RBT SDK:
     <uses-permission android:name="android.permission.INTERNET" />
 
-## Sdk Integration
-The Gamely SDK library can be integrated in any Android project by following steps mentioned in the sections below. SDK handles the artifacts remotely and resolves the dependencies at build level in integrating environment. This is JitPack based private artifacts library.
+## SDK Integration
+The Gamely SDK library can be integrated into any Android project by following the steps mentioned in the sections below. SDK handles the artifacts remotely and resolves the dependencies at the build level in the integrating environment. This is JitPack-based private artifacts library.
 
 
 
 ### Add Authentication Token
 The authentication token identifies the validity of dependent packages in the integrating environment. 
-Add the following line in the gradle.properties file of your Android application to add token:
+Add the following line in the gradle.properties file of your Android application to add a token:
 
-```groovy
+
+
+ ```groovy
 authToken= token_value // <onmobile team share you offline>
 ```
 
 ### Authenticate Maven Build Signatures
-Add it in your root build.gradle at the end of repositories: authToken added in the gradle.propeties
+Add it to your root build.gradle at the end of repositories: authToken added in the gradle.properties
 
 ```groovy
 allprojects {
@@ -51,15 +51,15 @@ Once you've updated your build.gradle file, make sure you have specified maven()
 The Android build environment will now validate the authentication token and download the dependencies.
 
 ### Installation 
-We publish the SDK to mavenCentral as an AAR file. Just declare it as dependency in your build.gradle file
+We publish the SDK to mavenCentral as an AAR file. Just declare it as a dependency in your build.gradle file
 ```groovy
 implementation 'org.bitbucket.onmobile-rbtsdk:gamelysdkandroid:$version$' 
-'Onmobile team share you the latest path/vertsion details of the SDK'
+'Onmobile team share you the latest path/version details of the SDK'
 ```
 Alternatively, you can download and add the AAR file included in this repo in your Module libs directory and tell gradle to install it like this:
 ```groovy
 implementation(files("libs/<sdkfilename>.aar")) 
-'Onmobile team share you the latest path/vertsion details of the SDK'
+'Onmobile team share you the latest path/version details of the SDK'
 ```
 
 ### Configurations Dependencies
@@ -78,6 +78,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }
 ```
+
 **Note:**
 There is no need to add the above dependencies.
 In case the project also uses some or any of the above dependencies and libraries then exclude those by adding below lines along with 
@@ -85,7 +86,6 @@ In case the project also uses some or any of the above dependencies and librarie
 **implementation 'org.bitbucket.onmobile-rbtsdk:latest_version'**
 **{exclude group: ‘com.x.y’ , module: ‘module X’}**
 
-Example: To exclude 'androidx.appcompat:appcompat:1.4.2'
 
 *implementation 'org.bitbucket.onmobile-rbtsdk:onmo_dialer:latest_version' 
 {exclude group: 'androidx.appcompat', module: ' appcompat'}*
@@ -94,11 +94,11 @@ This step is…  | If your app is…
 -------------- | -------------
 Required       | using a different version of AppCompat library.SDK will use the same version of library in the app.
 Not required	|  not using AppCompat library.
-Not required	| using same version of AppCompat library. Android OS will keep only one version of library for both app and SDK.
+Not required	| using the same version of AppCompat library. Android OS will keep only one version of library for both app and SDK.
 
 
 ## Initialize SDK
-You can do sdk intialisation in application/activity class
+You can do SDK initialization in the application/activity class
 ```groovy
 try {
            val gamelySDKClient = GamelySdkClient.Builder(context)
@@ -118,7 +118,7 @@ try {
 ```
 
 ### 1.0 Get Template
-Use following lines to get template
+Use the following lines to get a template
 
 ```kotlin
 //Use only activity context here
@@ -140,10 +140,8 @@ Template.SCRATCH_CARD | Scratch Card
 Template.SLOT_MACHINE | Slot Machine
 Template.GET_REWARD | Get Reward
 
-
-
 ### 1.2 Get Reward
-Use following lines to get reward
+Use the following lines to get a reward
 
 ```kotlin
 //Use only activity context here
@@ -157,12 +155,7 @@ Use following lines to get reward
             })
 ```
 
-
-
-
-
 See the [`Gamely-android-sdk` project](https://github.com/OnmobileGamely/Gamely-android-sdk/) for more details.
-
 
 
 #### Copyright
