@@ -53,9 +53,9 @@ The Android build environment will now validate the authentication token and dow
 ### Installation 
 We publish the SDK to mavenCentral as an AAR file. Just declare it as a dependency in your build.gradle file
 ```groovy
-implementation 'org.bitbucket.onmobile-rbtsdk:gamelysdkandroid:$version$' 
-'Onmobile team share you the latest path/version details of the SDK'
-
+implementation 'org.bitbucket.onmobile-rbtsdk.gamelysdkandroid:gamelysdk:st_0.0.8'
+```
+Onmobile team share you the latest path/version details of the SDK
 
 ### Configurations Dependencies
 Gamely SDK module has dependencies with the following third-party libraries.
