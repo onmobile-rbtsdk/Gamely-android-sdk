@@ -55,12 +55,7 @@ We publish the SDK to mavenCentral as an AAR file. Just declare it as a dependen
 ```groovy
 implementation 'org.bitbucket.onmobile-rbtsdk:gamelysdkandroid:$version$' 
 'Onmobile team share you the latest path/version details of the SDK'
-```
-Alternatively, you can download and add the AAR file included in this repo in your Module libs directory and tell gradle to install it like this:
-```groovy
-implementation(files("libs/<sdkfilename>.aar")) 
-'Onmobile team share you the latest path/version details of the SDK'
-```
+
 
 ### Configurations Dependencies
 Gamely SDK module has dependencies with the following third-party libraries.
