@@ -12,8 +12,8 @@ class GamelySampleApplication : Application() {
         super.onCreate()
         try {
             gamelySDKClient = GamelySdkClient.Builder(this)
-                .setUserId("Test") //Mandatory
-                .setApiKey("2zOLoNOUnsuuF3y2izLl")//Mandatory
+                .setUserId("%UserId") //Mandatory
+                .setApiKey(%API_KEY%)//Mandatory
                 .setLogEnabled(false) //false by default | Optional
                 .build()
         } catch (gamelySdkInitialisationException: GamelySdkInitialisationException) {
