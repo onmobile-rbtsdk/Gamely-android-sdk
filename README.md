@@ -51,7 +51,7 @@ The Android build environment will now validate the authentication token and dow
 ### Installation 
 We publish the SDK to mavenCentral as an AAR file. Just declare it as a dependency in your build.gradle file
 ```groovy
-implementation 'org.bitbucket.onmobile-rbtsdk.gamelysdkandroid:gamelysdk:st_0.0.13'
+implementation 'org.bitbucket.onmobile-rbtsdk.gamelysdkandroid:gamelysdk:$version$'
 ```
 Onmobile team share you the latest path/version details of the SDK
 
