@@ -1,5 +1,3 @@
-# Gamely Android SDKs
-
 ![Onmobile: Logo](http://t0.gstatic.com/images?q=tbn:ANd9GcQ7a6C5baa2f_3KA2zVpouH29tMGgRfcCn1PGuubySgbFbKuMxg)
 
 
@@ -53,9 +51,10 @@ The Android build environment will now validate the authentication token and dow
 ### Installation 
 We publish the SDK to mavenCentral as an AAR file. Just declare it as a dependency in your build.gradle file
 ```groovy
-implementation 'org.bitbucket.onmobile-rbtsdk.gamelysdkandroid:gamelysdk:st_0.0.8'
+implementation 'org.bitbucket.onmobile-rbtsdk.gamelysdkandroid:gamelysdk:st_0.0.13'
 ```
 Onmobile team share you the latest path/version details of the SDK
+
 
 ### Configurations Dependencies
 Gamely SDK module has dependencies with the following third-party libraries.
@@ -117,7 +116,8 @@ Use the following lines to get a template
 
 ```kotlin
 //Use only activity context here
-gamelySDKClient?.getTemplate(activityContext, TemplateType, object : IResponseListener {
+// %rulename% - Rule name of the template you wish to open
+gamelySDKClient?.getTemplate(activityContext, %rulename%, object : IResponseListener {
             override fun onSuccess() {
                    //handle the success use case from the host application 
             }
@@ -127,13 +127,14 @@ gamelySDKClient?.getTemplate(activityContext, TemplateType, object : IResponseLi
         })
 ```
 
-TemplateType  | Description
+### Supported Templates
+S.No.  | Template
 ------------- | -------------
-Template.SPIN_WHEEL | Spin Wheel
-Template.OPINION_POLL | Opinion Poll
-Template.SCRATCH_CARD | Scratch Card
-Template.SLOT_MACHINE | Slot Machine
-Template.GET_REWARD | Get Reward
+1 | Spin the Wheel
+2 | Opinion Poll
+3 | Scratch Card
+4 | Slot Machine
+5 | Treasure Chest
 
 ### 1.2 Get Reward
 Use the following lines to get a reward
