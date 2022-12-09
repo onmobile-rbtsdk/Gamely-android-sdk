@@ -97,7 +97,7 @@ You can do SDK initialization in the application/activity class
 try {
            val gamelySDKClient = GamelySdkClient.Builder(context)
                 .setUserId("user id value") 
-                //Mandatory <Onmobile team will share these details>
+                // user id value
                 .setApiKey("api key value")
                 //Mandatory <Onmobile team will share these details>
                 .setLogEnabled(false)
@@ -135,6 +135,7 @@ S.No.  | Template
 3 | Scratch Card
 4 | Slot Machine
 5 | Treasure Chest
+6 | Super Quiz
 
 ### 1.2 Get Reward
 Use the following lines to get a reward
