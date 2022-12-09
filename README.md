@@ -96,8 +96,8 @@ You can do SDK initialization in the application/activity class
 ```groovy
 try {
            val gamelySDKClient = GamelySdkClient.Builder(context)
-                .setUserId("user id value") 
-                // user id value
+                .setUserId("user id value")
+                //Mandatory <user id value>
                 .setApiKey("api key value")
                 //Mandatory <Onmobile team will share these details>
                 .setLogEnabled(false)
