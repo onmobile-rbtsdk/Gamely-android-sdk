@@ -94,7 +94,7 @@ Not required	| using the same version of AppCompat library. Android OS will keep
 ## Initialize SDK
 You can do SDK initialization in the application/activity class
 ```groovy
- gamelySDKClient = GamelySdkClient.Builder(this)
+ val gamelySDKClient = GamelySdkClient.Builder(this)
             .setUserId("user id value") //Mandatory
             .setApiKey("api key value")//Mandatory
             .setLogEnabled(false) //false by default | Optional
