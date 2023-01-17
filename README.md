@@ -94,62 +94,78 @@ Not required	| using the same version of AppCompat library. Android OS will keep
 ## Initialize SDK
 You can do SDK initialization in the application/activity class
 ```groovy
-try {
-           val gamelySDKClient = GamelySdkClient.Builder(context)
-                .setUserId("user id value")
-                //Mandatory <user id value>
-                .setApiKey("api key value")
-                //Mandatory <Onmobile team will share these details>
-                .setLogEnabled(false)
-                //false by default | Optional
-                .build()
-        } catch (gamelySdkInitialisationException: GamelySdkInitialisationException) {
-            //Catch the exception here
-            Toast.makeText(this, gamelySdkInitialisationException.message, Toast.LENGTH_SHORT)
-                .show()
-            //gamelySdkInitialisationException.printStackTrace()
-        }
+ gamelySDKClient = GamelySdkClient.Builder(this)
+            .setUserId("user id value") //Mandatory
+            .setApiKey("api key value")//Mandatory
+            .setLogEnabled(false) //false by default | Optional
+            .setLocale(GamelyLocale.ENGLISH)//Optional
+            .setInitListener(iSdkInitListener)//Optional
+            .build()
+
+          
+
+    // callback listener for sdk initialization
+    val iSdkInitListener = object : ISdkInitListener {
+        override fun onResponse(resultStatus: ResultStatus) {}
+    }
+
 ```
 
-### 1.0 Get Template
-Use the following lines to get a template
-
-```kotlin
-//Use only activity context here
-// %rulename% - Rule name of the template you wish to open
-gamelySDKClient?.getTemplate(activityContext, %rulename%, object : IResponseListener {
-            override fun onSuccess() {
-                   //handle the success use case from the host application 
-            }
-            override fun onFailure(message: String) {
-             //handle the failure use case from the host application 
-            }
-        })
-```
-
-### Supported Templates
-S.No.  | Template
-------------- | -------------
-1 | Spin the Wheel
-2 | Opinion Poll
-3 | Scratch Card
-4 | Slot Machine
-5 | Treasure Chest
-6 | Super Quiz
-
-### 1.2 Get Reward
+### 1.0 Get Reward
 Use the following lines to get a reward
 
 ```kotlin
-//Use only activity context here
- gamelySDKClient?.getReward(this@MainActivity, object : IResponseListener {
-                override fun onSuccess() {
-                    //handle the success use case from the host application 
-                }
-                override fun onFailure(message: String) {
-                    //handle the failure use case from the host application 
-                }
-            })
+ gamelySDKClient?.getReward(iResponseListener, iEventListener)
+
+
+//callback listener for response
+val iResponseListener = object : IResponseListener {
+            override fun onResponse(
+                resultStatus: ResultStatus,
+                resultBundle: ResultBundle?,
+                activity: AppCompatActivity?
+            ) {
+                //Incase of Win/Loose, response will have result bundle and activity
+                //resultBundle?.bundle?.getString("Text") // Result text
+                //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // ExpiryTimeStamp
+                //val bottomSheetDialog = BottomSheetDialog(activity) // use this activity to open bottomsheet
+                //(activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
+            }
+        }
+
+//callback listener for media play/pause events
+val iEventListener = object : IEventListener {
+            override fun onReceiveEvent(gamelyEvent: GamelyEvent) {}
+
+        }
+    
+```
+
+
+## Enums
+Enums used in initialization and listeners
+
+```kotlin
+enum class GamelyLocale {
+    ENGLISH,
+    BANGLA;
+}
+
+enum class ResultStatus {
+    UNAUTHORISED, //Invalid Package
+    AUTH, //Invalid API Key
+    UNKNOWNUSER,
+    NOTINITIALIZED,
+    ERRORHANDLED,//Error is handled by sdk
+    NOTEMPLATE,// Error needs to be handled by client app
+    WON,
+    LOOSE;
+}
+
+enum class GamelyEvent {
+    MEDIAPLAY,
+    MEDIAPAUSE;
+}
 ```
 
 See the [`Gamely-android-sdk` project](https://github.com/OnmobileGamely/Gamely-android-sdk/) for more details.
