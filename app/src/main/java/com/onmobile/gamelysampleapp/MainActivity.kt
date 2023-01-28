@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.onmobile.gamelysdk.sdkutil.ResultBundle
 import com.onmobile.gamelysdk.sdkutil.enums.GamelyEvent
+import com.onmobile.gamelysdk.sdkutil.enums.RequestOption
 import com.onmobile.gamelysdk.sdkutil.enums.ResultStatus
 import com.onmobile.gamelysdk.sdkutil.listeners.IEventListener
 import com.onmobile.gamelysdk.sdkutil.listeners.IResponseListener
@@ -24,10 +25,12 @@ class MainActivity : AppCompatActivity() {
                 activity: AppCompatActivity?
             ) {
                 //Incase of Win/Loose, response will have result bundle and activity
+                //Incase of NextPlayTime, response will have result bundle
+
                 //resultBundle?.bundle?.getString("Text") // Result text
                 //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // ExpiryTimeStamp
                 //val bottomSheetDialog = BottomSheetDialog(activity) // use this activity to open bottomsheet
-                (activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
+                if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
             }
         }
 
@@ -39,7 +42,16 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<AppCompatButton>(R.id.get_reward).setOnClickListener {
             val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
-            gamelySDKClient?.getReward(iResponseListener, iEventListener)
+            gamelySDKClient?.getReward(RequestOption.REWARD, iResponseListener, iEventListener)
+        }
+
+        findViewById<AppCompatButton>(R.id.get_next_play_time).setOnClickListener {
+            val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
+            gamelySDKClient?.getReward(
+                RequestOption.NEXT_PLAY_TIME,
+                iResponseListener,
+                iEventListener
+            )
         }
     }
 

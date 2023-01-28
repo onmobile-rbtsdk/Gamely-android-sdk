@@ -115,8 +115,8 @@ You can do SDK initialization in the application/activity class
 Use the following lines to get a reward
 
 ```kotlin
- gamelySDKClient?.getReward(iResponseListener, iEventListener)
-
+ gamelySDKClient?.getReward(RequestOption.REWARD, iResponseListener, iEventListener) // For reward template
+ gamelySDKClient?.getReward(RequestOption.NEXT_PLAY_TIME, iResponseListener, iEventListener) // For NextPlayTime
 
 //callback listener for response
 val iResponseListener = object : IResponseListener {
@@ -159,12 +159,19 @@ enum class ResultStatus {
     ERRORHANDLED,//Error is handled by sdk
     NOTEMPLATE,// Error needs to be handled by client app
     WON,
-    LOOSE;
+    LOOSE,
+    NEXT_PLAYTIME,//NextPlayTime result
+    FAILURE;//Any Failure/NextPlayTime Failure
 }
 
 enum class GamelyEvent {
     MEDIAPLAY,
     MEDIAPAUSE;
+}
+
+enum class RequestOption {
+    NEXT_PLAY_TIME,
+    REWARD;
 }
 ```
 
