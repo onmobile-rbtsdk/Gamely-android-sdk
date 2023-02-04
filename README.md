@@ -199,7 +199,7 @@ enum class ResultStatus {
     LOOSE,
     NEXT_PLAYTIME,//NextPlayTime result
     FAILURE,//Any Failure/NextPlayTime Failure
-    TOKEN_EXPIRED;
+    TOKEN_EXPIRED;//Token has expired
 }
 
 enum class GamelyEvent {
