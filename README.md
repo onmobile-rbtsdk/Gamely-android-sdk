@@ -95,7 +95,7 @@ Not required	| using the same version of AppCompat library. Android OS will keep
 You can do SDK initialization in the application/activity class
 ```groovy
  val gamelySDKClient = GamelySdkClient.Builder(this)
-            .setUserId("user id value") //Mandatory
+            .setUserId("token value") //Mandatory
             .setApiKey("api key value")//Mandatory
             .setLogEnabled(false) //false by default | Optional
             .setLocale(GamelyLocale.ENGLISH)//Optional
@@ -120,18 +120,55 @@ Use the following lines to get a reward
 
 //callback listener for response
 val iResponseListener = object : IResponseListener {
-            override fun onResponse(
-                resultStatus: ResultStatus,
-                resultBundle: ResultBundle?,
-                activity: AppCompatActivity?
-            ) {
-                //Incase of Win/Loose, response will have result bundle and activity
-                //resultBundle?.bundle?.getString("Text") // Result text
-                //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // ExpiryTimeStamp
-                //val bottomSheetDialog = BottomSheetDialog(activity) // use this activity to open bottomsheet
-                //(activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
+    override fun onResponse(
+        resultStatus: ResultStatus,
+        resultBundle: ResultBundle?,
+        activity: AppCompatActivity?,
+        tokenExpiredListener: ITokenExpiredListener?
+    ) {
+        //Incase of Win/Loose, response will have result bundle and activity
+        //Incase of NextPlayTime, response will have result bundle
+
+        //resultBundle?.bundle?.getString("Text") // Result text
+        //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // Next Rule Start timestamp in millisecond
+        //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")// Next Rule Remaining timestamp in millisecond
+
+        //val bottomSheetDialog = BottomSheetDialog(activity) // use this activity to open bottomsheet
+        //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
+
+
+        when (resultStatus) {
+            ResultStatus.UNAUTHORISED -> {}
+            ResultStatus.AUTH -> {}
+            ResultStatus.UNKNOWNUSER -> {}
+            ResultStatus.NOTINITIALIZED -> {}
+            ResultStatus.ERRORHANDLED -> {}
+            ResultStatus.NOTEMPLATE -> {}
+            ResultStatus.FAILURE -> {}
+            ResultStatus.WON -> {
+                //resultBundle?.bundle?.getString("Text")
+                //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
+            }
+            ResultStatus.LOOSE -> {
+                //resultBundle?.bundle?.getString("Text")
+                //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
+            }
+            ResultStatus.NEXT_PLAYTIME -> {
+                //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+            }
+            ResultStatus.TOKEN_EXPIRED -> {
+                //Handle if token has expired
+                //generate new token and pass new token
+                //tokenExpiredListener?.retryRequest("%TOKEN_VALUE%")//To continue request pass new token
+                //tokenExpiredListener?.cancelRequest()// This will cancel request
             }
         }
+    }
 
 //callback listener for media play/pause events
 val iEventListener = object : IEventListener {
@@ -161,7 +198,8 @@ enum class ResultStatus {
     WON,
     LOOSE,
     NEXT_PLAYTIME,//NextPlayTime result
-    FAILURE;//Any Failure/NextPlayTime Failure
+    FAILURE,//Any Failure/NextPlayTime Failure
+    TOKEN_EXPIRED;
 }
 
 enum class GamelyEvent {

@@ -13,7 +13,7 @@ class GamelySampleApplication : Application() {
         super.onCreate()
 
         gamelySDKClient = GamelySdkClient.Builder(this)
-            .setUserId(%USER_ID%) //Mandatory
+            .setUserId(%TOKEN_VALUE%) //Mandatory
             .setApiKey(%API_KEY%)//Mandatory
             .setLogEnabled(false) //false by default | Optional
             .setLocale(GamelyLocale.ENGLISH)//Optional

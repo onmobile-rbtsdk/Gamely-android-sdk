@@ -9,6 +9,7 @@ import com.onmobile.gamelysdk.sdkutil.enums.RequestOption
 import com.onmobile.gamelysdk.sdkutil.enums.ResultStatus
 import com.onmobile.gamelysdk.sdkutil.listeners.IEventListener
 import com.onmobile.gamelysdk.sdkutil.listeners.IResponseListener
+import com.onmobile.gamelysdk.sdkutil.listeners.ITokenExpiredListener
 import com.onmobile.gamelysdk.view.activities.GamelySdkHomeActivity
 
 
@@ -22,15 +23,51 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(
                 resultStatus: ResultStatus,
                 resultBundle: ResultBundle?,
-                activity: AppCompatActivity?
+                activity: AppCompatActivity?,
+                tokenExpiredListener: ITokenExpiredListener?
             ) {
                 //Incase of Win/Loose, response will have result bundle and activity
                 //Incase of NextPlayTime, response will have result bundle
 
                 //resultBundle?.bundle?.getString("Text") // Result text
-                //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // ExpiryTimeStamp
+                //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // Next Rule Start timestamp in millisecond
+                //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")// Next Rule Remaining timestamp in millisecond
+
                 //val bottomSheetDialog = BottomSheetDialog(activity) // use this activity to open bottomsheet
-                if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
+                //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
+
+
+                when (resultStatus) {
+                    ResultStatus.UNAUTHORISED -> {}
+                    ResultStatus.AUTH -> {}
+                    ResultStatus.UNKNOWNUSER -> {}
+                    ResultStatus.NOTINITIALIZED -> {}
+                    ResultStatus.ERRORHANDLED -> {}
+                    ResultStatus.NOTEMPLATE -> {}
+                    ResultStatus.FAILURE -> {}
+                    ResultStatus.WON -> {
+                        //resultBundle?.bundle?.getString("Text")
+                        //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                        //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                        //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
+                    }
+                    ResultStatus.LOOSE -> {
+                        //resultBundle?.bundle?.getString("Text")
+                        //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                        //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                        //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
+                    }
+                    ResultStatus.NEXT_PLAYTIME -> {
+                        //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                        //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                    }
+                    ResultStatus.TOKEN_EXPIRED -> {
+                        //Handle if token has expired
+                        //generate new token and pass new token
+                        //tokenExpiredListener?.retryRequest("%TOKEN_VALUE%")//To continue request pass new token
+                        //tokenExpiredListener?.cancelRequest()// This will cancel request
+                    }
+                }
             }
         }
 
@@ -48,9 +85,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<AppCompatButton>(R.id.get_next_play_time).setOnClickListener {
             val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
             gamelySDKClient?.getReward(
-                RequestOption.NEXT_PLAY_TIME,
-                iResponseListener,
-                iEventListener
+                RequestOption.NEXT_PLAY_TIME, iResponseListener, iEventListener
             )
         }
     }
