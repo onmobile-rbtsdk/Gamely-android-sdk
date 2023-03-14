@@ -115,8 +115,9 @@ You can do SDK initialization in the application/activity class
 Use the following lines to get a reward
 
 ```kotlin
- gamelySDKClient?.getReward(RequestOption.REWARD, iResponseListener, iEventListener) // For reward template
- gamelySDKClient?.getReward(RequestOption.NEXT_PLAY_TIME, iResponseListener, iEventListener) // For NextPlayTime
+ gamelySDKClient?.getReward(RequestOption.REWARD, null, iResponseListener, iEventListener) // For reward template
+ gamelySDKClient?.getReward(RequestOption.NEXT_PLAY_TIME, null, iResponseListener, iEventListener) // For NextPlayTime
+ gamelySDKClient?.getReward(RequestOption.REWARD_NAME, "rule name value", iResponseListener, iEventListener) // For reward by name
 
 //callback listener for response
 val iResponseListener = object : IResponseListener {
@@ -167,6 +168,11 @@ val iResponseListener = object : IResponseListener {
                 //tokenExpiredListener?.retryRequest("%TOKEN_VALUE%")//To continue request pass new token
                 //tokenExpiredListener?.cancelRequest()// This will cancel request
             }
+            ResultStatus.PLAY_COMPLETED -> {
+                //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
+            }
         }
     }
 
@@ -178,6 +184,12 @@ val iEventListener = object : IEventListener {
     
 ```
 
+### 1.1 Get LeaderBoard
+Use the following lines to get leaderboard
+
+```kotlin
+ gamelySDKClient?.getLeaderBoard("rule name value")  
+```
 
 ## Enums
 Enums used in initialization and listeners
@@ -199,7 +211,8 @@ enum class ResultStatus {
     LOOSE,
     NEXT_PLAYTIME,//NextPlayTime result
     FAILURE,//Any Failure/NextPlayTime Failure
-    TOKEN_EXPIRED;//Token has expired
+    TOKEN_EXPIRED,//Token has expired
+    PLAY_COMPLETED;//Reward with LeaderBoard Played & Reward with Scheduling Played(When not won/loose)
 }
 
 enum class GamelyEvent {

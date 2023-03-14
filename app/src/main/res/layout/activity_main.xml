@@ -20,4 +20,22 @@
         android:layout_marginTop="32dp"
         android:text="Get NextPlayTime" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/get_reward_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/get_next_play_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Get RewardByName" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/get_leaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/get_reward_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Get LeaderBoardByName" />
+
 </RelativeLayout>

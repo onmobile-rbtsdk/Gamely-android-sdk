@@ -67,6 +67,11 @@ class MainActivity : AppCompatActivity() {
                         //tokenExpiredListener?.retryRequest("%TOKEN_VALUE%")//To continue request pass new token
                         //tokenExpiredListener?.cancelRequest()// This will cancel request
                     }
+                    ResultStatus.PLAY_COMPLETED -> {
+                        //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
+                        //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                        //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
+                    }
                 }
             }
         }
@@ -79,14 +84,24 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<AppCompatButton>(R.id.get_reward).setOnClickListener {
             val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
-            gamelySDKClient?.getReward(RequestOption.REWARD, iResponseListener, iEventListener)
+            gamelySDKClient?.getReward(RequestOption.REWARD, null, iResponseListener, iEventListener)
         }
 
         findViewById<AppCompatButton>(R.id.get_next_play_time).setOnClickListener {
             val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
             gamelySDKClient?.getReward(
-                RequestOption.NEXT_PLAY_TIME, iResponseListener, iEventListener
+                RequestOption.NEXT_PLAY_TIME, null, iResponseListener, iEventListener
             )
+        }
+
+        findViewById<AppCompatButton>(R.id.get_reward_name).setOnClickListener {
+            val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
+            gamelySDKClient?.getReward(RequestOption.REWARD_NAME, "rule name value", iResponseListener, iEventListener)
+        }
+
+        findViewById<AppCompatButton>(R.id.get_leaderboard).setOnClickListener {
+            val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
+            gamelySDKClient?.getLeaderBoard("rule name value")
         }
     }
 
