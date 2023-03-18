@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 //resultBundle?.bundle?.getString("Text") // Result text
                 //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // Next Rule Start timestamp in millisecond
                 //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")// Next Rule Remaining timestamp in millisecond
+                //resultBundle?.bundle?.getString("NextPlayRuleName") // Next Rule Name
 
                 //val bottomSheetDialog = BottomSheetDialog(activity) // use this activity to open bottomsheet
                 //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
@@ -49,17 +50,20 @@ class MainActivity : AppCompatActivity() {
                         //resultBundle?.bundle?.getString("Text")
                         //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                         //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                        //resultBundle?.bundle?.getString("NextPlayRuleName")
                         //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
                     }
                     ResultStatus.LOOSE -> {
                         //resultBundle?.bundle?.getString("Text")
                         //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                         //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                        //resultBundle?.bundle?.getString("NextPlayRuleName")
                         //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
                     }
                     ResultStatus.NEXT_PLAYTIME -> {
                         //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                         //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                        //resultBundle?.bundle?.getString("NextPlayRuleName")
                     }
                     ResultStatus.TOKEN_EXPIRED -> {
                         //Handle if token has expired
@@ -70,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                     ResultStatus.PLAY_COMPLETED -> {
                         //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                         //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                        //resultBundle?.bundle?.getString("NextPlayRuleName")
                         //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
                     }
                 }
@@ -80,11 +85,6 @@ class MainActivity : AppCompatActivity() {
         val iEventListener = object : IEventListener {
             override fun onReceiveEvent(gamelyEvent: GamelyEvent) {}
 
-        }
-
-        findViewById<AppCompatButton>(R.id.get_reward).setOnClickListener {
-            val gamelySDKClient = (application as GamelySampleApplication).gamelySDKClient()
-            gamelySDKClient?.getReward(RequestOption.REWARD, null, iResponseListener, iEventListener)
         }
 
         findViewById<AppCompatButton>(R.id.get_next_play_time).setOnClickListener {

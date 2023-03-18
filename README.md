@@ -115,7 +115,6 @@ You can do SDK initialization in the application/activity class
 Use the following lines to get a reward
 
 ```kotlin
- gamelySDKClient?.getReward(RequestOption.REWARD, null, iResponseListener, iEventListener) // For reward template
  gamelySDKClient?.getReward(RequestOption.NEXT_PLAY_TIME, null, iResponseListener, iEventListener) // For NextPlayTime
  gamelySDKClient?.getReward(RequestOption.REWARD_NAME, "rule name value", iResponseListener, iEventListener) // For reward by name
 
@@ -133,7 +132,8 @@ val iResponseListener = object : IResponseListener {
         //resultBundle?.bundle?.getString("Text") // Result text
         //resultBundle?.bundle?.getLong("NextPlayTimeStamp") // Next Rule Start timestamp in millisecond
         //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")// Next Rule Remaining timestamp in millisecond
-
+        //resultBundle?.bundle?.getString("NextPlayRuleName") // Next Rule Name
+        
         //val bottomSheetDialog = BottomSheetDialog(activity) // use this activity to open bottomsheet
         //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()// use this to close sdk
 
@@ -150,17 +150,20 @@ val iResponseListener = object : IResponseListener {
                 //resultBundle?.bundle?.getString("Text")
                 //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                 //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                //resultBundle?.bundle?.getString("NextPlayRuleName")
                 //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
             }
             ResultStatus.LOOSE -> {
                 //resultBundle?.bundle?.getString("Text")
                 //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                 //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                //resultBundle?.bundle?.getString("NextPlayRuleName")
                 //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
             }
             ResultStatus.NEXT_PLAYTIME -> {
                 //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                 //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                //resultBundle?.bundle?.getString("NextPlayRuleName")
             }
             ResultStatus.TOKEN_EXPIRED -> {
                 //Handle if token has expired
@@ -171,6 +174,7 @@ val iResponseListener = object : IResponseListener {
             ResultStatus.PLAY_COMPLETED -> {
                 //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
                 //resultBundle?.bundle?.getLong("NextPlayRemainingTimeStamp")
+                //resultBundle?.bundle?.getString("NextPlayRuleName")
                 //if (activity != null) (activity as GamelySdkHomeActivity).triviaCompleted()
             }
         }
@@ -222,7 +226,7 @@ enum class GamelyEvent {
 
 enum class RequestOption {
     NEXT_PLAY_TIME,
-    REWARD;
+    REWARD_NAME
 }
 ```
 
