@@ -167,9 +167,21 @@ val iResponseListener = object : IResponseListener {
             }
             ResultStatus.TOKEN_EXPIRED -> {
                 //Handle if token has expired
-                //generate new token and pass new token
-                //tokenExpiredListener?.retryRequest("%TOKEN_VALUE%")//To continue request pass new token
-                //tokenExpiredListener?.cancelRequest()// This will cancel request
+               
+                 a) Cancel the current request 
+                    //requesttokenExpiredListener?.cancelRequest()
+                 b) Generate new token from host app and pass new token
+             
+                Option-1:
+                --------
+                c) Make Sure to reinitialize gamelysdk with new token before any new request
+                d) tokenExpiredListener?.retryRequest("%TOKEN_VALUE%")//To continue request pass new token
+              
+                Option-2:
+                ----------
+                c) Make Sure to reinitialize gamelysdk with new token
+                d) make new request where it fails 
+                
             }
             ResultStatus.PLAY_COMPLETED -> {
                 //resultBundle?.bundle?.getLong("NextPlayTimeStamp")
